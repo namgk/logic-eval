@@ -78,6 +78,24 @@ export default [
   },
   {
     i: {
+      expression: "id >= 1 || temperature > 20",
+      context: {
+        afa: 25,
+      }
+    },
+    o: false
+  },
+  {
+    i: {
+      expression: "|| temperature > 20",
+      context: {
+        afa: 25,
+      }
+    },
+    o: false
+  },
+  {
+    i: {
       expression: "id >= 1 && temperature > 20",
       context: {
         temperature: 15,

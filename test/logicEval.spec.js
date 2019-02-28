@@ -28,7 +28,7 @@ describe("logic expression evaluation", () => {
   )
 });
 
-describe.only("logic expression evaluation with context", () => {
+describe("logic expression evaluation with context", () => {
   logicExpressionWithContextTestData.forEach(
     test => {
       it("evaluating input: " + JSON.stringify(test.i) + ", expect output: " + test.o, () => {

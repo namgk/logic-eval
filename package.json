@@ -21,5 +21,8 @@
     "mocha-loader": "^2.0.0",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3"
+  },
+  "dependencies": {
+    "jison": "^0.4.18"
   }
 }

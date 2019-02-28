@@ -36,16 +36,8 @@ export default [
     o: false // either && or || has to present
   },
   {
-    i: "a > 20 && b === 1 || x",
-    o: false // either && or ||, not both
-  },
-  {
     i: "a > 20 && b === 1 | x",
     o: false // single |
-  },
-  {
-    i: "(a > 20 && b === 1) || x === 2",
-    o: false // () not supported
   },
   {
     i: "blah &&",
@@ -85,6 +77,22 @@ export default [
   },
   {
     i: "a > 20 && b === 1",
+    o: true
+  },
+  {
+    i: "a > 20 && b === 1 && c < 3",
+    o: true
+  },
+  {
+    i: "a > 20 && b === 1 && c < 3 && d <= 5",
+    o: true
+  },
+  {
+    i: "a > 20 && b === 1 && c < 3 && d <= 5 && e >= 6",
+    o: true
+  },
+  {
+    i: "a > 20 && 1 === b && 3 < c && d <= 5 && 6 >= e",
     o: true
   },
   {

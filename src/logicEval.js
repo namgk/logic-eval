@@ -1,53 +1,75 @@
+import Jison from 'jison';
+import grammar from './grammar';
+// const bnf = require('jison/bnf');
+
+const parser = new Jison.Parser(grammar);
+
 class LogicEval {
-  evaluate = (expression) => {
-    if (!this.validate(expression)){
-      return null;
+  compileExpression = (expression, extraFunctions /* optional */) => {
+    const functions = {
+        abs: Math.abs,
+        ceil: Math.ceil,
+        floor: Math.floor,
+        log: Math.log,
+        max: Math.max,
+        min: Math.min,
+        random: Math.random,
+        round: Math.round,
+        sqrt: Math.sqrt,
+    };
+
+    if (extraFunctions) {
+        for (var name in extraFunctions) {
+            if (extraFunctions.hasOwnProperty(name)) {
+                functions[name] = extraFunctions[name];
+            }
+        }
     }
 
-    const result = eval(expression) || false;
-    return result;
+    const tree = parser.parse(expression);
+    const js = [];
+    const toJs = (node) => {
+      if (Array.isArray(node)) {
+          node.forEach(toJs);
+      } else {
+          js.push(node);
+      }
+    }
+    js.push('return ');
+    tree.forEach(toJs);
+    js.push(';');
+
+    const unknown = (funcName) => {
+        throw 'Unknown function: ' + funcName + '()';
+    }
+
+    const prop = (obj, name) => {
+        return Object.prototype.hasOwnProperty.call(obj||{}, name) ? obj[name] : undefined;
+    }
+
+    const func = new Function('functions', 'data', 'unknown', 'prop', js.join(''));
+
+    return function(data) {
+        return func(functions, data, unknown, prop);
+    };
+  }
+
+  evaluate = (expression) => {
+    try {
+      const reasoner = this.compileExpression(expression);
+      return reasoner() === 1;
+    } catch (e){
+      return false
+    }
   }
 
   evaluateWithContext = (expression, context) => {
-    if (!this.validate(expression)){
-      return false;
-    }
-    if (typeof context !== 'object'){
-      return false;
-    }
-
-    const contextNames = Object.keys(context);
-    const contextValues = Object.values(context);
-
-    if (expression.indexOf("&&") > -1){
-      // if any of the context within expression is not available in contextName, always return false
-      const contextNamesInExpression = this.extractContextNames(expression);
-      if (contextNamesInExpression.some(name => !contextNames.includes(name))){
-        return false;
-      }
-    }
-
-    if (expression.indexOf("||") > -1){
-      // ignore any of the context within expression that is not available in contextName
-      const contextNamesInExpression = this.extractContextNames(expression);
-      if (contextNamesInExpression.some(name => !contextNames.includes(name))){
-        // ignore this contextName in the evaluation: remove it from the expression, or set it with a value that always resolves to false
-      }
-    }
-
-    const reasoner = new Function(contextNames, 'return ' + expression);
-
     try {
-      return reasoner.apply(null, contextValues);
+      const reasoner = this.compileExpression(expression);
+      return reasoner(context) === 1;
     } catch (e){
-      console.log(e)
-      return false;
+      return false
     }
-  }
-
-  extractContextNames = (expression) => {
-    const results = [];
-    return results;
   }
 
   validate = (expression) => {
@@ -59,15 +81,12 @@ class LogicEval {
       return false;
     }
 
-    const invalidCharacters = /[^a-zA-Z0-9_&|\s<>=]/g;
     const eitherAndOrOrOrGtOrLtOrE = /&{2}|\|{2}|<|>|={3}/g;
     const bothAndAndOr = /&{2}.*\|{2}|\|{2}.*&{2}/;
-    const containInvalidCharacters = expression.match(invalidCharacters);
-    const containBothAndAndOr = expression.match(bothAndAndOr);
     const containEitherAndOrOrOrGtOrLtOrE = expression.match(eitherAndOrOrOrGtOrLtOrE);
     const containWords = expression.match(/\w+/g);
 
-    if (containInvalidCharacters || containBothAndAndOr || !containWords || !containEitherAndOrOrOrGtOrLtOrE){
+    if (!containWords || !containEitherAndOrOrOrGtOrLtOrE){
       return false;
     }
 
@@ -79,7 +98,12 @@ class LogicEval {
       return false;
     }
 
-    return true;
+    try {
+      this.compileExpression(expression);
+      return true;
+    } catch (e){
+      return false
+    }
   }
 }
 
