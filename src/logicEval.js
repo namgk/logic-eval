@@ -1,6 +1,5 @@
 import Jison from 'jison';
 import grammar from './grammar';
-// const bnf = require('jison/bnf');
 
 const parser = new Jison.Parser(grammar);
 
