@@ -78,6 +78,36 @@ export default [
   },
   {
     i: {
+      expression: "id >= 1 && hour % 2 === 0",
+      context: {
+        id: 25,
+        hour: 6,
+      }
+    },
+    o: true
+  },
+  {
+    i: {
+      expression: "id >= 1 && hour % 2 === 0",
+      context: {
+        id: 25,
+        hour: 7,
+      }
+    },
+    o: false
+  },
+  {
+    i: {
+      expression: "id >= 1 || hour % 2 === 0",
+      context: {
+        id: 25,
+        hour: 6,
+      }
+    },
+    o: true
+  },
+  {
+    i: {
       expression: "id >= 1 || temperature > 20",
       context: {
         afa: 25,

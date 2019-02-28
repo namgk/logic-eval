@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import logicEval from '../src/logicEval';
+import logicEval from '../src/index';
 import logicExpressionTestData from './logicExpressionTestData';
 import logicExpressionWithContextTestData from './logicExpressionWithContextTestData';
 import expressionValidationTestData from './expressionValidationTestData';
