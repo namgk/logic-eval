@@ -1,11 +1,12 @@
 {
   "name": "logic-eval",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "dist/main.js",
   "scripts": {
     "test": "mocha --require @babel/register ./test/*",
-    "build": "webpack"
+    "build": "webpack",
+    "clean": "rm -rf dist && rm -rf node_modules/.cache/*"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,6 @@
     "webpack-cli": "^3.2.3"
   },
   "dependencies": {
-    "jison": "^0.4.18"
+    "jison-gho": "^0.6.1-215"
   }
 }

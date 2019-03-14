@@ -1,4 +1,4 @@
-import Jison from 'jison';
+import Jison from 'jison-gho/dist/jison-cjs-es5.js';
 import grammar from './grammar';
 
 const parser = new Jison.Parser(grammar);
