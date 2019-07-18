@@ -1,6 +1,13 @@
 export default [
   {
     i: {
+      expression: "",
+      context: { kioskId: 1 }
+    },
+    o: false // empty expression: always false
+  },
+  {
+    i: {
       expression: "temperature > 20",
       context: 25
     },
