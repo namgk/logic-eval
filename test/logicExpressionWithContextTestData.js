@@ -8,6 +8,34 @@ export default [
   },
   {
     i: {
+      expression: "true",
+      context: { kioskId: 1 }
+    },
+    o: false // invalid expression: always false
+  },
+  {
+    i: {
+      expression: "1 == 1 2 > 1",
+      context: { kioskId: 1 }
+    },
+    o: false // invalid expression: always false
+  },
+  {
+    i: {
+      expression: "1 == 1",
+      context: { kioskId: 1 }
+    },
+    o: true // always true
+  },
+  {
+    i: {
+      expression: "1 != 1",
+      context: { kioskId: 1 }
+    },
+    o: false // always false
+  },
+  {
+    i: {
       expression: "temperature > 20",
       context: 25
     },
