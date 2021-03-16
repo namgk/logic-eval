@@ -29,6 +29,13 @@ export default [
   },
   {
     i: {
+      expression: "(1 == 1)",
+      context: { kioskId: 1 }
+    },
+    o: true // always true
+  },
+  {
+    i: {
       expression: "1 != 1",
       context: { kioskId: 1 }
     },
