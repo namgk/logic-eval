@@ -143,6 +143,15 @@ export default [
   },
   {
     i: {
+      expression: "round(hour/3) == 3",
+      context: {
+        hour: 10,
+      }
+    },
+    o: true
+  },
+  {
+    i: {
       expression: "id >= 1 || temperature > 20",
       context: {
         afa: 25,
