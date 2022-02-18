@@ -121,8 +121,8 @@ export default {
           ['argsList , e', code([1, ',', 3], true)],
       ],
       inSet: [
-          ['e', code(['o ==', 1], true)],
-          ['inSet , e', code([1, '|| o ==', 3], true)],
+          ['e', code(['o ===', 1], true)],
+          ['inSet , e', code([1, '|| o ===', 3], true)],
       ],
   }
 };

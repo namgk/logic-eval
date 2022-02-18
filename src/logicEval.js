@@ -43,7 +43,7 @@ class LogicEval {
     }
 
     const prop = (obj, name) => {
-        return Object.prototype.hasOwnProperty.call(obj||{}, name) ? obj[name] : undefined;
+      return Object.prototype.hasOwnProperty.call(obj||{}, name) ? obj[name] : undefined;
     }
 
     const func = new Function('functions', 'data', 'unknown', 'prop', js.join(''));
@@ -56,7 +56,7 @@ class LogicEval {
   evaluate = (expression) => {
     try {
       const reasoner = this.compileExpression(expression);
-      return reasoner() === 1;
+      return reasoner() == 1;
     } catch (e){
       return false
     }
@@ -65,7 +65,7 @@ class LogicEval {
   evaluateWithContext = (expression, context) => {
     try {
       const reasoner = this.compileExpression(expression);
-      return reasoner(context) === 1;
+      return reasoner(context) == 1;
     } catch (e){
       return false
     }

@@ -177,6 +177,51 @@ export default [
   },
   {
     i: {
+      expression: 'a in ("1","2")',
+      context: {
+        a: "1"
+      }
+    },
+    o: true
+  },
+  {
+    i: {
+      expression: 'a in (1,2)',
+      context: {
+        a: "1"
+      }
+    },
+    o: false
+  },
+  {
+    i: {
+      expression: 'a in (1,2)',
+      context: {
+        a: 1
+      }
+    },
+    o: true
+  },
+  {
+    i: {
+      expression: 'a not in (1,2)',
+      context: {
+        a: 1
+      }
+    },
+    o: false
+  },
+  {
+    i: {
+      expression: 'a not in (1,2)',
+      context: {
+        a: 3
+      }
+    },
+    o: true
+  },
+  {
+    i: {
       expression: "id >= 1 && temperature > 20",
       context: {
         temperature: 15,
